@@ -39,8 +39,8 @@ Tired of using the terminal for Ngrok? **Ngrok Panel Pro** is a lightweight, loc
 
 1. **Clone or Download the Repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-   cd YOUR_REPOSITORY
+   git clone https://github.com/dbmatik/ngrok-panel.git
+   cd ngrok-panel
    ```
 
 2. **Run the Application:**
