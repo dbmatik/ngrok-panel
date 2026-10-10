@@ -12,8 +12,6 @@
 
 [English](#english) • [Türkçe](#türkçe)
 
-<img src="https://via.placeholder.com/800x450.png?text=✨+Insert+Dashboard+Screenshot+Here+✨" alt="Ngrok Panel Dashboard" width="100%">
-
 </div>
 
 ---
