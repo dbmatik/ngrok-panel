@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 Ngrok Panel Pro
+# 🚀 Ngrok Panel
 
 **A Modern Web Dashboard for Local Ngrok Management**  
 *Yerel Ngrok Yönetimi İçin Modern Web Arayüzü*
@@ -18,7 +18,7 @@
 
 <h2 id="english">🇬🇧 English</h2>
 
-Tired of using the terminal for Ngrok? **Ngrok Panel Pro** is a lightweight, local web dashboard that allows you to manage your HTTP, TCP, and TLS tunnels with a single click. It features an auto-installer, auth-token management, and a beautiful UI.
+Tired of using the terminal for Ngrok? **Ngrok Panel** is a lightweight, local web dashboard that allows you to manage your HTTP, TCP, and TLS tunnels with a single click. It features an auto-installer, auth-token management, and a beautiful UI.
 
 ### ✨ Features
 *   **Zero-Config Auto Install:** Automatically detects your OS and downloads Ngrok if it's not installed.
