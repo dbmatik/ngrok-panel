@@ -32,7 +32,7 @@ Tired of using the terminal for Ngrok? **Ngrok Panel Pro** is a lightweight, loc
 ### 📸 Screenshots
 | Light Mode | Dark Mode |
 | :---: | :---: |
-| <img src="https://via.placeholder.com/400x250.png?text=Light+Mode+Screenshot" alt="Light Mode"> | <img src="https://via.placeholder.com/400x250.png?text=Dark+Mode+Screenshot" alt="Dark Mode"> |
+| <img src="https://github.com/dbmatik/ngrok-panel/blob/main/images/en2.png" alt="Light Mode"> | <img src="https://github.com/dbmatik/ngrok-panel/blob/main/images/en1.png" alt="Dark Mode"> |
 
 ### 🛠️ Installation & Quick Start
 
@@ -72,7 +72,7 @@ Ngrok için sürekli terminal kullanmaktan sıkıldınız mı? **Ngrok Panel Pro
 ### 📸 Ekran Görüntüleri
 | Gündüz Modu | Gece Modu |
 | :---: | :---: |
-| <img src="https://via.placeholder.com/400x250.png?text=Gunduz+Modu+Gorseli" alt="Gündüz Modu"> | <img src="https://via.placeholder.com/400x250.png?text=Gece+Modu+Gorseli" alt="Gece Modu"> |
+| <img src="https://github.com/dbmatik/ngrok-panel/blob/main/images/tr2.png" alt="Gündüz Modu"> | <img src="https://github.com/dbmatik/ngrok-panel/blob/main/images/tr1.png" alt="Gece Modu"> |
 
 ### 🛠️ Kurulum ve Başlangıç
 
