@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngrok Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-[#0d1117] dark:text-[#c9d1d9] min-h-screen font-sans transition-colors duration-300">
+    <div class="max-w-5xl mx-auto p-6 md:p-8">
+        
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white" data-i18n="title">Ngrok Panel</h1>
+            <div class="flex gap-4 items-center">
+                <select id="lang-select" class="bg-white dark:bg-[#161b22] border border-gray-300 dark:border-[#30363d] text-gray-700 dark:text-[#c9d1d9] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                    <option value="tr">Türkçe</option>
+                    <option value="en">English</option>
+                </select>
+                <button id="theme-toggle" class="bg-white dark:bg-[#161b22] border border-gray-300 dark:border-[#30363d] p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#21262d] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="moon-icon" class="w-5 h-5 text-gray-600 dark:text-gray-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="sun-icon" class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="setup-section" class="hidden bg-white dark:bg-[#161b22] border border-gray-200 dark:border-[#30363d] shadow-sm p-6 rounded-xl mb-8 transition-colors">
+            <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white" data-i18n="setup">Kurulum</h2>
+            <div id="install-box">
+                <p class="mb-5 text-gray-500 dark:text-[#8b949e]" data-i18n="setup_desc">Sistemde Ngrok bulunamadi.</p>
+                <button id="install-btn" class="bg-green-600 hover:bg-green-700 dark:bg-[#238636] dark:hover:bg-[#2ea043] text-white px-5 py-2.5 rounded-lg font-medium transition-colors" data-i18n="install_btn">Otomatik Kur</button>
+                <p id="install-status" class="mt-3 text-sm font-medium"></p>
+            </div>
+            
+            <div id="auth-box" class="hidden mt-6 border-t border-gray-200 dark:border-[#30363d] pt-6 transition-colors">
+                <p class="mb-4 text-gray-500 dark:text-[#8b949e]" data-i18n="auth_desc">Ngrok Auth Token girin.</p>
+                <div class="flex gap-3">
+                    <input type="text" id="auth-token" data-i18n-ph="token_ph" placeholder="Token" class="flex-1 bg-gray-50 dark:bg-[#0d1117] text-gray-900 dark:text-white px-4 py-2.5 rounded-lg border border-gray-300 dark:border-[#30363d] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                    <button id="auth-btn" class="bg-green-600 hover:bg-green-700 dark:bg-[#238636] dark:hover:bg-[#2ea043] text-white px-5 py-2.5 rounded-lg font-medium transition-colors" data-i18n="save">Kaydet</button>
+                </div>
+                <p id="auth-status" class="mt-3 text-sm font-medium"></p>
+            </div>
+        </div>
+
+        <div id="app-section" class="hidden">
+            <div class="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-[#30363d] shadow-sm p-6 rounded-xl mb-6 transition-colors">
+                <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white" data-i18n="add_title">Port Yönlendirme Ekle</h2>
+                <div class="flex flex-col md:flex-row gap-3">
+                    <input type="text" id="t-name" data-i18n-ph="p_name" placeholder="Proje Adi" class="flex-1 bg-gray-50 dark:bg-[#0d1117] text-gray-900 dark:text-white px-4 py-2.5 rounded-lg border border-gray-300 dark:border-[#30363d] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                    <select id="t-protocol" class="bg-gray-50 dark:bg-[#0d1117] text-gray-900 dark:text-white px-4 py-2.5 rounded-lg border border-gray-300 dark:border-[#30363d] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors md:w-36">
+                        <option value="http">HTTP/HTTPS</option>
+                        <option value="tcp">TCP</option>
+                        <option value="tls">TLS</option>
+                    </select>
+                    <input type="number" id="t-port" data-i18n-ph="p_port" placeholder="Port" class="w-full md:w-28 bg-gray-50 dark:bg-[#0d1117] text-gray-900 dark:text-white px-4 py-2.5 rounded-lg border border-gray-300 dark:border-[#30363d] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                    <button id="add-btn" class="bg-blue-600 hover:bg-blue-700 dark:bg-[#1f6feb] dark:hover:bg-[#388bfd] text-white px-6 py-2.5 rounded-lg font-medium transition-colors" data-i18n="add_btn">Ekle</button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-[#30363d] shadow-sm rounded-xl overflow-hidden transition-colors">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-[#21262d] text-gray-500 dark:text-[#8b949e] border-b border-gray-200 dark:border-[#30363d] text-sm transition-colors">
+                                <th class="py-4 px-6 font-medium" data-i18n="th_project">Proje</th>
+                                <th class="py-4 px-6 font-medium" data-i18n="th_proto">Protokol / Port</th>
+                                <th class="py-4 px-6 font-medium" data-i18n="th_status">Durum</th>
+                                <th class="py-4 px-6 font-medium" data-i18n="th_ip">Ngrok IP</th>
+                                <th class="py-4 px-6 font-medium text-right" data-i18n="th_action">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tunnels-list" class="divide-y divide-gray-200 dark:divide-[#30363d]">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dict = {
+            tr: {
+                title: "Ngrok Panel",
+                setup: "Kurulum",
+                setup_desc: "Sistemde Ngrok bulunamadi.",
+                install_btn: "Otomatik Kur",
+                installing: "İndiriliyor...",
+                installed: "Kuruldu.",
+                auth_desc: "Ngrok Auth Token girin.",
+                save: "Kaydet",
+                token_ph: "Token",
+                add_title: "Port Yönlendirme Ekle",
+                p_name: "Proje Adi",
+                p_port: "Port",
+                add_btn: "Ekle",
+                th_project: "Proje",
+                th_proto: "Protokol / Port",
+                th_status: "Durum",
+                th_ip: "Ngrok IP",
+                th_action: "İşlem",
+                status_active: "Açık",
+                status_inactive: "Kapalı",
+                btn_stop: "Durdur",
+                btn_start: "Başlat",
+                btn_delete: "Sil",
+                error: "Hata"
+            },
+            en: {
+                title: "Ngrok Panel",
+                setup: "Setup",
+                setup_desc: "Ngrok not found in system.",
+                install_btn: "Auto Install",
+                installing: "Downloading...",
+                installed: "Installed.",
+                auth_desc: "Enter Ngrok Auth Token.",
+                save: "Save",
+                token_ph: "Token",
+                add_title: "Add Port Forwarding",
+                p_name: "Project Name",
+                p_port: "Port",
+                add_btn: "Add",
+                th_project: "Project",
+                th_proto: "Protocol / Port",
+                th_status: "Status",
+                th_ip: "Ngrok IP",
+                th_action: "Action",
+                status_active: "Active",
+                status_inactive: "Offline",
+                btn_stop: "Stop",
+                btn_start: "Start",
+                btn_delete: "Delete",
+                error: "Error"
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'tr';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        const qs = (s) => document.querySelector(s);
+        const qsa = (s) => document.querySelectorAll(s);
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                qs('#moon-icon').classList.remove('hidden');
+                qs('#sun-icon').classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                qs('#sun-icon').classList.remove('hidden');
+                qs('#moon-icon').classList.add('hidden');
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        qs('#theme-toggle').addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+        });
+        applyTheme(currentTheme);
+
+        function applyLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            qs('#lang-select').value = lang;
+            
+            qsa('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[lang][key]) el.innerText = dict[lang][key];
+            });
+            qsa('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (dict[lang][key]) el.placeholder = dict[lang][key];
+            });
+            if (!qs('#app-section').classList.contains('hidden')) {
+                loadTunnels();
+            }
+        }
+
+        qs('#lang-select').addEventListener('change', (e) => {
+            applyLang(e.target.value);
+        });
+        applyLang(currentLang);
+
+        async function checkStatus() {
+            const res = await fetch('/api/status');
+            const data = await res.json();
+            if (data.installed) {
+                qs('#app-section').classList.remove('hidden');
+                qs('#setup-section').classList.add('hidden');
+                loadTunnels();
+            } else {
+                qs('#setup-section').classList.remove('hidden');
+                qs('#app-section').classList.add('hidden');
+            }
+        }
+
+        qs('#install-btn').addEventListener('click', async () => {
+            qs('#install-status').innerText = dict[currentLang].installing;
+            qs('#install-status').className = "mt-3 text-sm text-yellow-600 dark:text-[#e3b341]";
+            qs('#install-btn').disabled = true;
+            try {
+                const res = await fetch('/api/install', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    qs('#install-status').innerText = dict[currentLang].installed;
+                    qs('#install-status').className = "mt-3 text-sm text-green-600 dark:text-[#3fb950]";
+                    setTimeout(() => {
+                        qs('#install-box').classList.add('hidden');
+                        qs('#auth-box').classList.remove('hidden');
+                    }, 800);
+                } else {
+                    qs('#install-status').innerText = data.error;
+                    qs('#install-status').className = "mt-3 text-sm text-red-600 dark:text-[#f85149]";
+                    qs('#install-btn').disabled = false;
+                }
+            } catch (e) {
+                qs('#install-status').innerText = dict[currentLang].error;
+                qs('#install-status').className = "mt-3 text-sm text-red-600 dark:text-[#f85149]";
+                qs('#install-btn').disabled = false;
+            }
+        });
+
+        qs('#auth-btn').addEventListener('click', async () => {
+            const token = qs('#auth-token').value;
+            if(!token) return;
+            qs('#auth-status').innerText = "...";
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+            const data = await res.json();
+            if (data.success) {
+                checkStatus();
+            } else {
+                qs('#auth-status').innerText = data.error;
+                qs('#auth-status').className = "mt-3 text-sm text-red-600 dark:text-[#f85149]";
+            }
+        });
+
+        qs('#add-btn').addEventListener('click', async () => {
+            const name = qs('#t-name').value;
+            const protocol = qs('#t-protocol').value;
+            const port = qs('#t-port').value;
+            if(!name || !port) return;
+
+            await fetch('/api/tunnels', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, protocol, port })
+            });
+            
+            qs('#t-name').value = '';
+            qs('#t-port').value = '';
+            loadTunnels();
+        });
+
+        async function loadTunnels() {
+            const res = await fetch('/api/tunnels');
+            const data = await res.json();
+            const tbody = qs('#tunnels-list');
+            tbody.innerHTML = '';
+            
+            data.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50 dark:hover:bg-[#1c2128] transition-colors text-sm';
+                
+                const tLabel = dict[currentLang];
+                
+                const statusDot = t.status === 'running' 
+                    ? `<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-green-500 dark:bg-[#3fb950] rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span><span class="text-gray-700 dark:text-gray-300">${tLabel.status_active}</span></div>` 
+                    : `<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-gray-400 dark:bg-[#8b949e] rounded-full"></span><span class="text-gray-500 dark:text-gray-400">${tLabel.status_inactive}</span></div>`;
+
+                const urlBlock = t.url 
+                    ? `<div class="flex items-center gap-2">
+                        <input type="text" readonly value="${t.url}" class="bg-gray-100 dark:bg-[#0d1117] border border-gray-300 dark:border-[#30363d] px-3 py-1.5 rounded-md w-48 md:w-60 text-gray-800 dark:text-[#c9d1d9] focus:outline-none text-xs md:text-sm transition-colors">
+                        <button onclick="navigator.clipboard.writeText('${t.url}')" class="text-gray-500 hover:text-gray-900 dark:text-[#8b949e] dark:hover:text-white transition-colors p-1" title="Copy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                       </div>`
+                    : '<span class="text-gray-400 dark:text-[#484f58] ml-2">-</span>';
+
+                const actionBtn = t.status === 'running'
+                    ? `<button onclick="stopTunnel('${t.id}')" class="bg-red-500 hover:bg-red-600 dark:bg-[#da3633] dark:hover:bg-[#f85149] text-white px-3.5 py-1.5 rounded-lg text-sm transition-colors shadow-sm">${tLabel.btn_stop}</button>`
+                    : `<button onclick="startTunnel('${t.id}')" class="bg-green-600 hover:bg-green-700 dark:bg-[#238636] dark:hover:bg-[#2ea043] text-white px-3.5 py-1.5 rounded-lg text-sm transition-colors shadow-sm">${tLabel.btn_start}</button>`;
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">${t.name}</td>
+                    <td class="py-4 px-6"><span class="bg-gray-200 dark:bg-[#21262d] text-gray-700 dark:text-[#c9d1d9] px-2.5 py-1 rounded-md text-xs font-mono font-bold tracking-wider">${t.protocol.toUpperCase()}</span> <span class="text-gray-500 dark:text-[#8b949e] ml-2 font-mono">${t.port}</span></td>
+                    <td class="py-4 px-6">${statusDot}</td>
+                    <td class="py-4 px-6">${urlBlock}</td>
+                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                        ${actionBtn}
+                        <button onclick="deleteTunnel('${t.id}')" class="bg-transparent border border-gray-300 dark:border-[#30363d] hover:bg-gray-100 dark:hover:bg-[#30363d] text-gray-700 dark:text-[#c9d1d9] px-3.5 py-1.5 rounded-lg text-sm ml-2 transition-colors">${tLabel.btn_delete}</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.startTunnel = async (id) => {
+            await fetch(`/api/tunnels/${id}/start`, { method: 'POST' });
+            loadTunnels();
+        };
+
+        window.stopTunnel = async (id) => {
+            await fetch(`/api/tunnels/${id}/stop`, { method: 'POST' });
+            loadTunnels();
+        };
+
+        window.deleteTunnel = async (id) => {
+            await fetch(`/api/tunnels/${id}`, { method: 'DELETE' });
+            loadTunnels();
+        };
+
+        checkStatus();
+        setInterval(() => {
+            if(!qs('#app-section').classList.contains('hidden')){
+                loadTunnels();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
