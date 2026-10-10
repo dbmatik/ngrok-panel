@@ -30,7 +30,6 @@ Tired of using the terminal for Ngrok? **Ngrok Panel Pro** is a lightweight, loc
 *   **No Terminal Needed:** Everything runs in the background.
 
 ### 📸 Screenshots
-*(You can upload your screenshots to your repository's `docs` or `images` folder and update these links)*
 | Light Mode | Dark Mode |
 | :---: | :---: |
 | <img src="https://via.placeholder.com/400x250.png?text=Light+Mode+Screenshot" alt="Light Mode"> | <img src="https://via.placeholder.com/400x250.png?text=Dark+Mode+Screenshot" alt="Dark Mode"> |
@@ -71,7 +70,6 @@ Ngrok için sürekli terminal kullanmaktan sıkıldınız mı? **Ngrok Panel Pro
 *   **Terminal Gerekmez:** Tüm işlemler arka planda sessizce yürütülür.
 
 ### 📸 Ekran Görüntüleri
-*(Kendi ekran görüntülerinizi yükleyip buradaki bağlantıları güncelleyebilirsiniz)*
 | Gündüz Modu | Gece Modu |
 | :---: | :---: |
 | <img src="https://via.placeholder.com/400x250.png?text=Gunduz+Modu+Gorseli" alt="Gündüz Modu"> | <img src="https://via.placeholder.com/400x250.png?text=Gece+Modu+Gorseli" alt="Gece Modu"> |
@@ -80,8 +78,8 @@ Ngrok için sürekli terminal kullanmaktan sıkıldınız mı? **Ngrok Panel Pro
 
 1. **Projeyi İndirin (Clone):**
    ```bash
-   git clone https://github.com/KULLANICI_ADINIZ/REPO_ADINIZ.git
-   cd REPO_ADINIZ
+   git clone https://github.com/dbmatik/ngrok-panel.git
+   cd ngrok-panel
    ```
 
 2. **Uygulamayı Çalıştırın:**
@@ -101,5 +99,5 @@ Ngrok için sürekli terminal kullanmaktan sıkıldınız mı? **Ngrok Panel Pro
 ---
 
 <div align="center">
-  <i>Developed with ❤️ for the open-source community.</i>
+  <i>dbmatik</i>
 </div>
